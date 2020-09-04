@@ -1,14 +1,14 @@
 /*
  * @Description:
  * @Autor: hhao
- * @Date: 2020-09-02 15:59:17
+ * @Date: 2020-09-04 14:44:27
  * @LastEditors: hhao
- * @LastEditTime: 2020-09-04 17:17:49
+ * @LastEditTime: 2020-09-04 15:11:28
  */
 import React, { Component } from 'react';
 import { connect } from 'dva';
 import UnityLoader from './UnityLoader';
-import ProgressCircle from '../../components/ProgressComponents/ProgressCircle';
+import ProgressCircle from '../ProgressComponents/ProgressCircle';
 import styles from './UnityViewer.less';
 
 class UnityViewer extends Component {
@@ -29,7 +29,7 @@ class UnityViewer extends Component {
           </div>
         )}
         <div className={!isLoad ? styles['unityHide'] : styles['unityShow']}>
-          <UnityLoader />
+          <UnityLoader modalPath={modalPath} />
         </div>
       </div>
     );

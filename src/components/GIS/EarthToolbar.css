@@ -1,0 +1,23 @@
+.toolBar{
+  background-color:rgba(0,0,0,0.8);
+  padding: 6px 10px;
+  display: inline-flex;
+}
+
+.divider{
+  color: white;
+  margin: 0 10px;
+  line-height: 18px;
+  opacity: 0.5;
+  font-weight: lighter;
+}
+
+.earthToolButton {
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+.earthToolButton:hover{
+  opacity: 1;
+}
+

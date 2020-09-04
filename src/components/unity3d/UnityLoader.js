@@ -3,7 +3,7 @@
  * @Author: xfGuo
  * @Date: 2020-07-17 08:51:41
  * @LastEditors: hhao
- * @LastEditTime: 2020-09-04 17:16:36
+ * @LastEditTime: 2020-09-04 17:14:41
  */
 
 import React, { Component } from 'react';
@@ -26,9 +26,16 @@ class UnityLoader extends Component {
     this.modalPath = {};
   }
 
-  componentWillReceiveProps(props) {
-    const { modalPath } = props;
-    if (modalPath && modalPath === this.props.modalPath) return;
+  // componentWillReceiveProps(props) {
+  //   const { modalPath } = props;
+  //   if (modalPath && modalPath === this.props.modalPath) return;
+  //   this.loadU3dModal(modalPath);
+  // }
+
+  componentDidMount() {
+    const { modalPath } = this.props;
+    this.modalPath = modalPath;
+    console.log(modalPath);
     this.loadU3dModal(modalPath);
   }
 
@@ -40,63 +47,58 @@ class UnityLoader extends Component {
         modalPath?.modalJsonPath,
         modalPath?.modalJsPath,
       );
-      this.unityContent.on('EventName', message => {
-        const { dispatch } = this.props;
-        let k = message.match(/(?<=")([^:]+)(?=")/g);
-        const type = k[0],
-          id = k[1],
-          name = k[2];
-        if (type === ProtocolDataType.PersonPosition) {
-          Modal.success({
-            title: `${name}`,
-            className: styles.unityModal,
-            maskClosable: true,
-            width: this.getWPrec(2200),
-            style: { height: this.getHPrec(1800) },
-            content: (
-              <Provider store={window.g_app._store}>
-                {/* <PersonnelArrivalContent
-                  idNum={id}
-                  date={moment().format('YYYY-MM-DD')}
-                /> */}
-              </Provider>
-            ),
-          });
-        } else if (type === ProtocolDataType.VideoMonitor) {
-          dispatch({
-            type: 'unity3d/save',
-            payload: {
-              unityDeviceCode: id,
-            },
-          });
-        } else if (type === ProtocolDataType.RiskPoint) {
-          Modal.success({
-            title: `${name}`,
-            className: styles.unityModal,
-            maskClosable: true,
-            width: this.getWPrec(2200),
-            centered: true,
-            style: { height: this.getHPrec(1850) },
-            content: (
-              <Provider store={window.g_app._store}>
-                {/* <RiskPointDetailModal id={id}></RiskPointDetailModal> */}
-              </Provider>
-            ),
-          });
-        } else if (type === ProtocolDataType.EnvironmentMonitor) {
-          Modal.success({
-            title: 'Environment Info',
-            maskClosable: true,
-            content: (
-              <div>
-                <h3>信息:{message}</h3>
-              </div>
-            ),
-          });
-        } else {
-          return;
-        }
-      });
+      // this.unityContent.on('EventName', message => {
+      //   const { dispatch } = this.props;
+      //   let k = message.match(/(?<=")([^:]+)(?=")/g);
+      //   const type = k[0], id = k[1], name = k[2];
+      //   if (type === ProtocolDataType.PersonPosition) {
+      //     Modal.success({
+      //       title: `${name}`,
+      //       className: styles.unityModal,
+      //       maskClosable: true,
+      //       width: this.getWPrec(2200),
+      //       style: { height: this.getHPrec(1800) },
+      //       content: (
+      //         <Provider store={window.g_app._store}>
+
+      //         </Provider>
+      //       ),
+      //     })
+      //   } else if (type === ProtocolDataType.VideoMonitor) {
+      //     dispatch({
+      //       type: 'unity3d/save',
+      //       payload: {
+      //         unityDeviceCode: id,
+      //       },
+      //     });
+      //   }else if (type === ProtocolDataType.RiskPoint) {
+      //     Modal.success({
+      //       title: `${name}`,
+      //       className: styles.unityModal,
+      //       maskClosable: true,
+      //       width: this.getWPrec(2200),
+      //       centered:true,
+      //       style: { height: this.getHPrec(1850) },
+      //       content: (
+      //         <Provider store={window.g_app._store} >
+
+      //         </Provider>
+      //       ),
+      //     });
+      //   } else if (type === ProtocolDataType.EnvironmentMonitor) {
+      //     Modal.success({
+      //       title: 'Environment Info',
+      //       maskClosable: true,
+      //       content: (
+      //         <div>
+      //           <h3>信息:{message}</h3>
+      //         </div>
+      //       ),
+      //     });
+      //   } else {
+      //     return;
+      //   }
+      // });
 
       this.unityContent.on('progress', progression => {
         const { dispatch } = this.props;
@@ -123,6 +125,8 @@ class UnityLoader extends Component {
       });
 
       if (this.unityContent) {
+        debugger;
+
         dispatch({
           type: 'unity3d/save',
           payload: {
@@ -145,7 +149,6 @@ class UnityLoader extends Component {
 
   render() {
     const { modalPath } = this.props;
-
     return this.modalPath && JSON.stringify(this.modalPath) !== '{}' ? (
       <Unity unityContent={this.unityContent} />
     ) : (

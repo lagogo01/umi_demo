@@ -1,0 +1,20 @@
+.container {
+  width: 64px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+.compassWrapper {
+  background-color: transparent;
+  text-align: center;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.northText {
+  margin: -5px;
+  font-weight: 800;
+  color: #08c;
+}
